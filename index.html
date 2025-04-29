@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dice roll simulator</title>
+  <style>
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: center;
+    }
+    #dice-container{
+     perspective: 1000px;
+     perspective-origin: center;
+    }
+    #dice{
+      width: 100px;
+      height: 100px;
+      background-color: #E5E7B8;
+      border: 1px solid #6F0E0E;
+      border-radius: 10px;
+      transform-style: preserve-3d;
+      transition: transform 0.5s;
+      position: relative;
+    }
+    .dot{
+      position: absolute;
+      left: 100px;
+      width: 20px;
+      height: 20px;
+      background-color: #333;
+      border-radius: 50%;
+    }
+    #result{
+      font-size: 24px;
+      font-weight: bolder;
+      margin-bottom: 20px;
+      color: #98B145;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    #roll-btn{
+    top: 1rem;
+    }
+    h1{
+      font-family: fantasy;
+      color: rgb(192,78,16)!important;
+    }
+    .roll-animation{
+      animation: roll 0.85s ease-in-out;
+    }
+    @keyframes roll{
+      0%{
+        transform: rotate(0deg) rotateX(0deg);
+      }
+      100%{
+        transform: rotate(360deg) rotateX(360deg);
+      }
+    }
+    .container-fluid{
+      top: 14rem;
+    }
+  </style>
+  <link rel="stylesheet" href="bootstrap.css" type="text/css" media="all" />
+</head>
+<body>
+  <div class="container-fluid position-relative">
+      <h1 class="text-center fw-bold">DICE ROLL SIMULATOR</h1>
+  <button class="btn btn-success d-flex position-relative start-50 translate-middle" id="roll-btn">Roll Dice</button>
+  <div class="text-center" id="result"></div>
+  <div class="text-center d-flex position-relative justify-content-center" id="dice-container">
+    <div id="dice"></div>
+  </div>
+  </div>
+  <script>
+    const rollBtn=document.getElementById('roll-btn');
+    const resultDiv=document.getElementById('result');
+    const diceDiv=document.getElementById('dice');
+    rollBtn.addEventListener('click', rollDice);
+    function rollDice(){
+      const roll=Math.floor(Math.random()*6)+1;
+      resultDiv.textContent=`You rolled a ${roll}`;
+      diceDiv.classList.add('roll-animation');
+      setTimeout(()=>{
+        diceDiv.classList.remove('roll-animation');
+      }, 850);
+    diceDiv.innerHTML='';
+    switch(roll){
+      case 1:
+      addDot(50, 50);
+      break;
+      case 2: 
+      addDot(25, 25);
+      addDot(75, 75);
+      break;
+      case 3: 
+      addDot(25, 25);
+      addDot(50, 50);
+      addDot(75, 75);
+      break;
+      case 4:
+      addDot(25, 25);
+      addDot(75, 25);
+      addDot(25, 75);
+      addDot(75, 75);
+      break;
+      case 5:
+      addDot(25, 25);
+      addDot(75, 25);
+      addDot(50, 50);
+      addDot(25, 75);
+      addDot(75, 75);
+      break;
+      case 6:
+      addDot(25, 20);
+      addDot(75, 20);
+      addDot(25, 50);
+      addDot(75, 50);
+      addDot(25, 80);
+      addDot(75, 80);
+      break;
+    }
+  }
+  function addDot(x, y){
+    const dot=document.createElement('div');
+    dot.classList.add('dot');
+    dot.style.top=`${y-10}px`;
+    dot.style.left=`${x-10}px`;
+    diceDiv.appendChild(dot);
+  }
+    
+  </script>
+</body>
+</html>
